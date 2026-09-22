@@ -50,6 +50,31 @@ The **bias** acts like a personal threshold or mood adjuster for that specific n
 * **A High (Positive) Bias:** Makes the neuron **trigger-happy**. Even if the incoming signals are weak or sparse, the high bias gives it a head start, making it very easy for the neuron to fire. (e.g., A neuron looking for the letter "e" might have a high bias because "e" appears so frequently in English).
 * **A Low (Negative) Bias:** Makes the neuron **stubborn**. Even if it receives several incoming signals, it refuses to fire unless the evidence is overwhelmingly strong. (e.g., A neuron looking for a very rare medical term).
 
+The biases (along with the weights) aren't set just *once* at a specific moment. Instead, they go through a continuous lifecycle from random guesses to finely tuned settings over the entire course of training.
+
+Here is the timeline of how a neuron's "mood adjuster" is set:
+
+### 1. Before Training (Random Initialization)
+
+Before the LLM reads a single word of text, engineers initialize all the parameters. The biases usually start out as **zeros** or tiny **random numbers**. At this stage, the LLM’s "brain" is a chaotic mess of uncoordinated neurons. If you asked it a question, it would spit out total gibberish because its thresholds have no rhyme or reason.
+
+### 2. During Training (Continuous Adjustment)
+
+As the LLM goes through its training phase—reading billions of sentences from the internet, books, and articles—the biases are constantly being tweaked. This happens in a loop:
+
+* **The Guess:** The model tries to predict the next word in a sentence using its current (imperfect) biases and weights.
+* **The Mistake Check:** It compares its guess to the actual word.
+* **The Adjustment (Backpropagation):** If it was wrong, a mathematical algorithm calculates how much blame every single neuron shares. It then nudges their biases and weights slightly—some up, some down—to correct the error.
+
+This loop happens **trillions of times** across massive clusters of computer processors. Each pass makes the biases a tiny bit better at helping the model understand language.
+
+### 3. After Training (Freezing for Deployment)
+
+Once the training phase is finished (which can take months and cost millions of dollars), the learning stops. The final, perfectly calculated numbers for every single bias and weight are **frozen in place**. When you download or use an LLM today, you are using a static snapshot of these finalized parameters.
+
+*(Note: If a company wants to "fine-tune" a model for a specific task later, they unfreeze the parameters and run a shorter, specialized training round, tweaking the biases further.)*
+
+---
 ### A Quick Analogy
 
 Imagine you are deciding whether to turn on the house lights.
@@ -61,5 +86,6 @@ In an LLM, adjusting the billions of biases during training means the model is f
 
 ---
 ###### Further Questions
-Would you like to dive deeper into how these connections actually process a specific sentence?
-Would you like to explore how these neurons work together to recognize patterns like grammar or sentence structure?
+* Would you like to dive deeper into how these connections actually process a specific sentence?
+* Would you like to explore how these neurons work together to recognize patterns like grammar or sentence structure?
+* Would you like to know how the model figures out *which direction* to adjust those biases when it makes a mistake?
